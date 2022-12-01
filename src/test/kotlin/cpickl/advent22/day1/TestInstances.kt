@@ -6,6 +6,17 @@ import io.kotest.property.arbitrary.int
 import io.kotest.property.arbitrary.list
 import io.kotest.property.arbitrary.next
 
+class ElfBuilder {
+    private var position = Position.first
+    private val elves = mutableListOf<Elf>()
+    fun elf(vararg calories: Int) = apply {
+        elves += Elf(position, calories.map { Calories(it) })
+        position = position.next()
+    }
+
+    fun build(): List<Elf> = elves
+}
+
 fun Arb.Companion.calories() = arbitrary {
     Calories(
         value = int(min = 0, max = 1_000).next(),

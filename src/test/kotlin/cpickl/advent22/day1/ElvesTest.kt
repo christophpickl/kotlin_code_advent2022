@@ -2,6 +2,10 @@ package cpickl.advent22.day1
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.data.forAll
+import io.kotest.data.headers
+import io.kotest.data.row
+import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -41,7 +45,6 @@ class ElvesTest : DescribeSpec() {
 
         describe("When instantiating") {
             it("with duplicate positions Then throw") {
-
                 shouldThrow<Exception> {
                     Elves(elf.copy(position = samePosition), elf.copy(position = samePosition))
                 }
@@ -72,11 +75,21 @@ class ElvesTest : DescribeSpec() {
         }
 
         describe("When calculate top 3 carrying") {
-            it("Given no elf Then return 0") {
-                Elves().mostThreeCarrying() shouldBe 0
-            }
-            it("Given 1 elf Then return his calories") {
-                Elves(elf.copy(calories = listOf(Calories(1)))).mostThreeCarrying() shouldBe 1L
+            it("Given different elves Then calculate properly") {
+                forAll(
+                    table(
+                        headers("elves", "total"),
+                        row({ }, 0L),
+                        row({ elf(1) }, 1L),
+                        row({ elf(1).elf(2) }, 3L),
+                        row({ elf(1).elf(2).elf(3) }, 6L),
+                        row({ elf(1).elf(10).elf(20).elf(30) }, 60L),
+                        row({ elf(1).elf(10).elf(10).elf(10) }, 30L),
+                        row({ elf(1).elf(20).elf(20).elf(10) }, 50L),
+                    )
+                ) { prepare: ElfBuilder.() -> Unit, total: Long ->
+                    Elves(ElfBuilder().apply { prepare() }.build()).mostThreeCarrying() shouldBe total
+                }
             }
         }
     }

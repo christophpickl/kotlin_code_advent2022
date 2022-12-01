@@ -29,11 +29,12 @@ data class Elves(
         if (elves.isEmpty()) CarryingResult.None
         else {
             val elvesByTotalCaloriesSorted = elves.groupBy { it.totalCalories }.toSortedMap()
-            val elves = elvesByTotalCaloriesSorted[elvesByTotalCaloriesSorted.lastKey()]!!
-            CarryingResult.build(elves)
+            CarryingResult.build(elvesByTotalCaloriesSorted[elvesByTotalCaloriesSorted.lastKey()]!!)
         }
 
-    fun mostThreeCarrying(): Long = 0L
+    fun mostThreeCarrying(): Long =
+        elves.sortedByDescending { it.totalCalories }.take(3).sumOf { it.totalCalories }
+
 }
 
 sealed interface CarryingResult {
