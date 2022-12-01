@@ -11,7 +11,6 @@ import io.kotest.property.arbitrary.next
 class ElvesTest : DescribeSpec() {
 
     private val notExistingClasspath = "/not_existing.txt"
-    private val calories = Arb.calories().next()
     private val caloriesInt = Arb.calories().next().value
     private val elf = Arb.elf().next()
 

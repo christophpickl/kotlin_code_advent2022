@@ -8,6 +8,7 @@ object SolutionApp {
     }
 
     private fun loadElves(): Elves =
+        // Elf on position #209 has 74198 calories.
         Elves.byClasspath("/cpickl/advent22/day1/given_input.txt")
 
     private fun CarryingResult.toPrintString(): String = when (this) {

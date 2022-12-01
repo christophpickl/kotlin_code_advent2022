@@ -19,7 +19,7 @@ data class Elves(
         }
 
         fun byString(input: String, lineSeparator: String = DEFAULT_LINE_SEPARATOR): Elves =
-            byLines(input.split(lineSeparator))
+            byLines(input.trim().split(lineSeparator))
 
         private fun byLines(lines: List<String>): Elves =
             ElvesParser.parse(lines)
