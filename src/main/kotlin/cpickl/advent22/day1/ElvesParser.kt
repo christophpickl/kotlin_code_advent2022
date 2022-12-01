@@ -7,17 +7,17 @@ object ElvesParser {
 
     fun parse(lines: List<String>): Elves {
         if (lines.isEmpty()) return Elves.empty
-        return Elves(parse(1, emptyCalories, lines.toFirstAndRest(), emptyList()))
+        return Elves(parse(Position.first, emptyCalories, lines.toFirstAndRest(), emptyList()))
     }
 
     private fun parse(
-        position: Int,
+        position: Position,
         calories: List<Calories>,
         lines: FirstAndRest<String>,
         result: List<Elf>
     ): List<Elf> =
         if (lines.first == elfDelimiter) {
-            parse(position + 1, emptyCalories, lines.next(), result.plus(Elf(position, calories)))
+            parse(position.next(), emptyCalories, lines.next(), result.plus(Elf(position, calories)))
         } else {
             val newCalories = calories.plus(Calories.parse(lines.first))
             if (lines.restIsEmpty) {

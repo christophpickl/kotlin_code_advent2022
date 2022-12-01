@@ -13,7 +13,7 @@ class CaloriesTest : DescribeSpec({
         it(" with invalid number Then throw") {
             shouldThrow<Exception> {
                 Calories(-1)
-            }
+            }.message shouldContain "-1"
         }
     }
     describe("When parse") {

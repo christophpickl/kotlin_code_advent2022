@@ -12,9 +12,15 @@ fun Arb.Companion.calories() = arbitrary {
     )
 }
 
+fun Arb.Companion.position() = arbitrary {
+    Position(
+        value = int(min = 1, max = 1_000).next(),
+    )
+}
+
 fun Arb.Companion.elf() = arbitrary {
     Elf(
-        position = int(min = 1).next(),
+        position = position().next(),
         calories = list(calories()).next(),
     )
 }

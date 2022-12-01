@@ -13,6 +13,7 @@ class ElvesTest : DescribeSpec() {
     private val notExistingClasspath = "/not_existing.txt"
     private val caloriesInt = Arb.calories().next().value
     private val elf = Arb.elf().next()
+    private val samePosition = Position(1)
 
     init {
         describe("When parsing") {
@@ -40,7 +41,7 @@ class ElvesTest : DescribeSpec() {
 
         describe("When instantiating") {
             it("with duplicate positions Then throw") {
-                val samePosition = 1
+
                 shouldThrow<Exception> {
                     Elves(elf.copy(position = samePosition), elf.copy(position = samePosition))
                 }
@@ -67,6 +68,15 @@ class ElvesTest : DescribeSpec() {
                     elfA,
                     elfB
                 )
+            }
+        }
+
+        describe("When calculate top 3 carrying") {
+            it("Given no elf Then return 0") {
+                Elves().mostThreeCarrying() shouldBe 0
+            }
+            it("Given 1 elf Then return his calories") {
+                Elves(elf.copy(calories = listOf(Calories(1)))).mostThreeCarrying() shouldBe 1L
             }
         }
     }

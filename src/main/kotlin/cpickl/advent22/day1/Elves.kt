@@ -32,6 +32,8 @@ data class Elves(
             val elves = elvesByTotalCaloriesSorted[elvesByTotalCaloriesSorted.lastKey()]!!
             CarryingResult.build(elves)
         }
+
+    fun mostThreeCarrying(): Long = 0L
 }
 
 sealed interface CarryingResult {
