@@ -5,10 +5,9 @@ object ElvesParser {
     private const val elfDelimiter = ""
     private val emptyCalories = emptyList<Calories>()
 
-    fun parse(lines: List<String>): Elves {
-        if (lines.isEmpty()) return Elves.empty
-        return Elves(parse(Position.first, emptyCalories, lines.toFirstAndRest(), emptyList()))
-    }
+    fun parse(lines: List<String>): Elves =
+        if (lines.isEmpty()) Elves.empty
+        else Elves(parse(Position.first, emptyCalories, lines.toFirstAndRest(), emptyList()))
 
     private fun parse(
         position: Position,
@@ -26,14 +25,4 @@ object ElvesParser {
                 parse(position, newCalories, lines.next(), result)
             }
         }
-}
-
-fun <T> List<T>.toFirstAndRest() = FirstAndRest(first(), drop(1))
-
-data class FirstAndRest<T>(
-    val first: T,
-    val rest: List<T>,
-) {
-    val restIsEmpty = rest.isEmpty()
-    fun next() = rest.toFirstAndRest()
 }

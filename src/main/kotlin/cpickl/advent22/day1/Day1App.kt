@@ -1,14 +1,23 @@
 package cpickl.advent22.day1
 
-object SolutionApp {
+object Day1App {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        part2()
+    }
+
+    fun part1() {
         println(loadElves().mostCarrying().toPrintString())
+        // Elf on position #209 has 74198 calories.
+    }
+
+    fun part2() {
+        println("The top 3 carrying elves carry: ${loadElves().mostThreeCarrying()}")
+        // The top 3 carrying elves carry: 209914
     }
 
     private fun loadElves(): Elves =
-        // Elf on position #209 has 74198 calories.
         Elves.byClasspath("/cpickl/advent22/day1/given_input.txt")
 
     private fun CarryingResult.toPrintString(): String = when (this) {

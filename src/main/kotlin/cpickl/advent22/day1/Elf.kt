@@ -1,7 +1,6 @@
 package cpickl.advent22.day1
 
 data class Elf(
-    /** 1 base indexed */
     val position: Position,
     val calories: List<Calories>,
 ) {

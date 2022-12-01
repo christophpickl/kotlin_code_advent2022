@@ -6,23 +6,22 @@ data class Elves(
     constructor(vararg elves: Elf) : this(elves.toList())
 
     init {
-        require(elves.map { it.position }.distinct().size == elves.size)
+        require(elves.map { it.position }.distinct().size == elves.size) {
+            "Found duplicate positions for elves which is not allowed => ${elves.map { it.position }}"
+        }
     }
 
     companion object {
         private const val DEFAULT_LINE_SEPARATOR = "\n"
         val empty = Elves(emptyList())
 
-        fun byClasspath(path: String): Elves {
+        fun byClasspath(path: String, lineSeparator: String = DEFAULT_LINE_SEPARATOR): Elves {
             val resource = Elves::class.java.getResource(path) ?: error("File not found in classpath: [$path]")
-            return byString(resource.readText())
+            return byString(resource.readText(), lineSeparator)
         }
 
         fun byString(input: String, lineSeparator: String = DEFAULT_LINE_SEPARATOR): Elves =
-            byLines(input.trim().split(lineSeparator))
-
-        private fun byLines(lines: List<String>): Elves =
-            ElvesParser.parse(lines)
+            ElvesParser.parse(input.trim().split(lineSeparator))
     }
 
     fun mostCarrying(): CarryingResult =
@@ -34,7 +33,6 @@ data class Elves(
 
     fun mostThreeCarrying(): Long =
         elves.sortedByDescending { it.totalCalories }.take(3).sumOf { it.totalCalories }
-
 }
 
 sealed interface CarryingResult {

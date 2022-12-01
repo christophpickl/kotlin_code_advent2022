@@ -8,10 +8,10 @@ value class Calories(val value: Int) {
         }
     }
 
-    override fun toString() = value.toString()
-
     companion object {
         fun parse(string: String): Calories =
             string.toIntOrNull()?.let { Calories(it) } ?: error("Invalid calories: [$string]")
     }
+
+    override fun toString() = value.toString()
 }
